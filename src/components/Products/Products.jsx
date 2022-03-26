@@ -9,7 +9,7 @@ import useStyles from './styles';
 //   {id: 1, name:'PC', description:'Windows PC', price: '$100', image:'https://i.insider.com/5e4436f72dae5c62ab70fe92?width=1136&format=jpeg'}
 // ];
 
-const Products = ({products}) =>{
+const Products = ({products, onAddToCart}) =>{
   const classes = useStyles();
   return(
     <main className={classes.content}>
@@ -17,7 +17,7 @@ const Products = ({products}) =>{
       <Grid container justifyContent = 'center' spacing={4}>
         {products.map((product) =>(
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-            <Product product={product}/>
+            <Product product={product} onAddToCart={onAddToCart}/>
           </Grid>
         ))}
       </Grid>

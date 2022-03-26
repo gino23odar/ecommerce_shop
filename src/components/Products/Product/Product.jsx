@@ -5,7 +5,7 @@ import { mergeClasses } from '@material-ui/styles';
 
 import useStyles from './styles';
 
-const Product = ({product}) => {
+const Product = ({product, onAddToCart}) => {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const Product = ({product}) => {
         </div>
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
-        <IconButton aria-label="add to Cart">
+        <IconButton aria-label="add to Cart" onClick={() => onAddToCart(product.id, 1)}>
           <AddShoppingCart />
         </IconButton>
       </CardActions>
