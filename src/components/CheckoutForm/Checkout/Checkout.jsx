@@ -8,7 +8,7 @@ import PaymentForm from '../PaymentForm';
 const steps = ['Shipping address', 'Payment details'];
 
 const Checkout = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const classes = useStyles();
 
   const Confirmation = () => (
@@ -17,7 +17,7 @@ const Checkout = () => {
     </div>
   )
 
-  const Form = () => activeStep == 0
+  const Form = () => activeStep === 0
     ? <AdressForm/>
     : <PaymentForm/>
 
