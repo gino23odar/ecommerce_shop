@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button} from '@material-ui/core';
-import {Link} from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import {Link, useNavigate} from 'react-router-dom';
 
 import {commerce} from '../../../lib/commerce';
 import useStyles from './styles';
@@ -14,6 +15,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
   const [checkoutToken, setCheckoutToken] = useState(null);
   const classes = useStyles();
   const [shippingData, setShippingData] = useState({});
+  const history = useNavigate();
 
   useEffect(()=>{
     const generateToken = async()=>{
@@ -22,7 +24,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
 
         setCheckoutToken(token);
       }catch (error){
-        console.log(error);
+        history.pushState('/');
       }
     }
     generateToken();
@@ -38,6 +40,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
 
   let Confirmation = () => order.customer ?(
     <>
+      <CssBaseline/>
       <div>
         <Typography variant='h5'>Thank you for shopping with E-commerce, {order.customer.firstname} {order.customer.lastname}</Typography>
         <Divider className={classes.divider}/>
