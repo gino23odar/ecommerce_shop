@@ -15,6 +15,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
   const [checkoutToken, setCheckoutToken] = useState(null);
   const classes = useStyles();
   const [shippingData, setShippingData] = useState({});
+  const [isFinished, setIsFinished] = useState(false);
   const history = useNavigate();
 
   useEffect(()=>{
@@ -38,13 +39,28 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     nextStep();
   }
 
+  const timeout =()=>{
+    setTimeout(() => {
+      setIsFinished(true);
+      console.log("Request timed out.")
+    }, 3000);
+  }
+
   let Confirmation = () => order.customer ?(
     <>
-      <CssBaseline/>
       <div>
         <Typography variant='h5'>Thank you for shopping with E-commerce, {order.customer.firstname} {order.customer.lastname}</Typography>
         <Divider className={classes.divider}/>
         <Typography variant='subtitle2'>Order reference: {order.customer_reference}</Typography>
+      </div>
+      <br />
+      <Button component={Link} to='/' variant='outlined' type='button'>HOME</Button>
+    </>
+  ) : isFinished? (
+    <>
+      <div>
+        <Typography variant='h5'>Thank you for shopping with E-commerce</Typography>
+        <Divider className={classes.divider}/>
       </div>
       <br />
       <Button component={Link} to='/' variant='outlined' type='button'>HOME</Button>
@@ -64,11 +80,12 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
 
   const Form = () => activeStep === 0
     ? <AdressForm checkoutToken={checkoutToken} next={next}/>
-    : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} onCaptureCheckout={onCaptureCheckout}/>
+    : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} onCaptureCheckout={onCaptureCheckout} timeout={timeout}/>
 
 
   return (
     <>
+    <CssBaseline/>
       <div className={classes.toolbar} />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
